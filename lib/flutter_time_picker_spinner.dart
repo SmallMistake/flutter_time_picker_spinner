@@ -75,7 +75,8 @@ class TimePickerSpinner extends StatefulWidget {
   final TextStyle? normalTextStyle;
   final double? itemHeight;
   final double? itemWidth;
-  final AlignmentGeometry? alignment;
+  final AlignmentGeometry? hourAlignment;
+  final AlignmentGeometry? minuteAlignment;
   final double? spacing;
   final bool isForce2Digits;
   final TimePickerCallback? onTimeChange;
@@ -91,7 +92,8 @@ class TimePickerSpinner extends StatefulWidget {
       this.normalTextStyle,
       this.itemHeight,
       this.itemWidth,
-      this.alignment,
+      this.hourAlignment,
+      this.minuteAlignment,
       this.spacing,
       this.isForce2Digits = false,
       this.onTimeChange})
@@ -164,8 +166,12 @@ class _TimePickerSpinnerState extends State<TimePickerSpinner> {
     return widget.spacing != null ? widget.spacing : defaultSpacing;
   }
 
-  AlignmentGeometry? _getAlignment() {
-    return widget.alignment != null ? widget.alignment : defaultAlignment;
+  AlignmentGeometry? _getHourAlignment() {
+    return widget.hourAlignment != null ? widget.hourAlignment : defaultAlignment;
+  }
+
+  AlignmentGeometry? _getMinuteAlignment() {
+    return widget.minuteAlignment != null ? widget.minuteAlignment : defaultAlignment;
   }
 
   bool isLoop(int value) {
@@ -368,7 +374,7 @@ class _TimePickerSpinnerState extends State<TimePickerSpinner> {
           }
           return Container(
             height: _getItemHeight(),
-            alignment: _getAlignment(),
+            alignment: controller == hourController? _getHourAlignment() : _getMinuteAlignment(),
             child: Text(
               text,
               style: selectedIndex == index
